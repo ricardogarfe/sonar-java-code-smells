@@ -1,4 +1,4 @@
-package org.sonar.samples.java.checks;
+package org.ricardogarfe.sonarqube.java.checks;
 
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.check.Rule;

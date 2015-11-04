@@ -1,10 +1,10 @@
-package org.sonar.samples.java;
+package org.ricardogarfe.sonarqube.java;
 
 import java.util.Arrays;
 
+import org.ricardogarfe.sonarqube.java.checks.AvoidSwitchCheck;
 import org.sonar.plugins.java.api.CheckRegistrar;
 import org.sonar.plugins.java.api.JavaCheck;
-import org.sonar.samples.java.checks.AvoidSwitchCheck;
 
 /**
  * Provide the "checks" (implementations of rules) classes that are gonna be
