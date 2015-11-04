@@ -1,4 +1,4 @@
-package org.sonar.samples.java.checks;
+package org.ricardogarfe.sonarqube.java.checks;
 
 import org.junit.Test;
 import org.sonar.java.checks.verifier.JavaCheckVerifier;

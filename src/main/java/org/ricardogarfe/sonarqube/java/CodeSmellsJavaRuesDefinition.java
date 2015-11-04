@@ -3,7 +3,7 @@
  * All rights reserved
  * mailto:contact AT sonarsource DOT com
  */
-package org.sonar.samples.java;
+package org.ricardogarfe.sonarqube.java;
 
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinitionAnnotationLoader;
@@ -19,7 +19,7 @@ public class CodeSmellsJavaRuesDefinition implements RulesDefinition {
   @Override
   public void define(Context context) {
     NewRepository repo = context.createRepository(REPOSITORY_KEY, "java");
-    repo.setName("Connexis");
+    repo.setName("Java Code Smells");
 
     // We could use a XML or JSON file to load all rule metadata, but
     // we prefer use annotations in order to have all information in a single place
