@@ -6,12 +6,8 @@
 class AvoidSwitchCheck { 
   void foo(){ 
       switch (1) { // Noncompliant 
-        case 1: // Noncompliant 
-          System.out.println("plop"); // Noncompliant 
-          break; // Noncompliant 
-        case 2: // Noncompliant 
-          System.out.println("bar"); //Compliant
-          break; // Noncompliant 
+        case 1:  
+          break;  
       }
     }
 }
