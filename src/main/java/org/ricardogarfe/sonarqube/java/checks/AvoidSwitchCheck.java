@@ -28,7 +28,7 @@ public class AvoidSwitchCheck extends BaseTreeVisitor implements JavaFileScanner
   @Override
   public void visitSwitchStatement(SwitchStatementTree tree) {
 
-    context.addIssue(tree, this, "Remove this \"switch\" statement and develop using correct patterns.");
+    context.addIssue(tree, this, "Remove this \"switch\" statement and develop with Polymorphism.");
 
     super.visitSwitchStatement(tree);
   }
