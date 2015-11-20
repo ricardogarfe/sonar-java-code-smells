@@ -1,4 +1,4 @@
-package org.ricardogarfe.sonarqube.java.checks;
+package org.sonar.java.checks;
 
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.check.Rule;
@@ -10,7 +10,7 @@ import org.sonar.squidbridge.annotations.ActivatedByDefault;
 import org.sonar.squidbridge.annotations.SqaleConstantRemediation;
 import org.sonar.squidbridge.annotations.SqaleSubCharacteristic;
 
-@Rule(key = "AvoidSwitch", name = "\"switch\" statements are evil", description = "This rule detects usage of switch", tags = {
+@Rule(key = "AvoidSwitch", name = "\"switch\" statements are evil",tags = {
     "error", "apocalypse" })
 @ActivatedByDefault
 @SqaleSubCharacteristic(RulesDefinition.SubCharacteristics.API_ABUSE)

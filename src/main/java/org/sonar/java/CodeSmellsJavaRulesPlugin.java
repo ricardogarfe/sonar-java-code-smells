@@ -3,7 +3,7 @@
  * All rights reserved
  * mailto:contact AT sonarsource DOT com
  */
-package org.ricardogarfe.sonarqube.java;
+package org.sonar.java;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,8 +1,8 @@
-package org.ricardogarfe.sonarqube.java;
+package org.sonar.java;
 
 import java.util.Arrays;
 
-import org.ricardogarfe.sonarqube.java.checks.AvoidSwitchCheck;
+import org.sonar.java.checks.AvoidSwitchCheck;
 import org.sonar.plugins.java.api.CheckRegistrar;
 import org.sonar.plugins.java.api.JavaCheck;
 

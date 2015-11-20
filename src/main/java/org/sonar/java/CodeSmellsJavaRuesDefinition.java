@@ -3,7 +3,7 @@
  * All rights reserved
  * mailto:contact AT sonarsource DOT com
  */
-package org.ricardogarfe.sonarqube.java;
+package org.sonar.java;
 
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinitionAnnotationLoader;
@@ -14,7 +14,7 @@ import org.sonar.api.server.rule.RulesDefinitionAnnotationLoader;
  */
 public class CodeSmellsJavaRuesDefinition implements RulesDefinition {
 
-  public static final String REPOSITORY_KEY = "code-smells";
+  public static final String REPOSITORY_KEY = "codesmells";
 
   @Override
   public void define(Context context) {
