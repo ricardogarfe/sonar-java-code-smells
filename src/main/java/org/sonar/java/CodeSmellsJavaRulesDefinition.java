@@ -7,18 +7,21 @@ package org.sonar.java;
 
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinitionAnnotationLoader;
+import org.sonar.java.checks.CheckList;
+import org.sonar.plugins.java.Java;
+import org.sonar.squidbridge.annotations.AnnotationBasedRulesDefinition;
 
 /**
  * Declare rule metadata in server repository of rules. That allows to list the rules
  * in the page "Rules".
  */
-public class CodeSmellsJavaRuesDefinition implements RulesDefinition {
+public class CodeSmellsJavaRulesDefinition implements RulesDefinition {
 
   public static final String REPOSITORY_KEY = "codesmells";
 
   @Override
   public void define(Context context) {
-    NewRepository repo = context.createRepository(REPOSITORY_KEY, "java");
+    NewRepository repo = context.createRepository(REPOSITORY_KEY, Java.KEY);
     repo.setName("Java Code Smells");
 
     // We could use a XML or JSON file to load all rule metadata, but

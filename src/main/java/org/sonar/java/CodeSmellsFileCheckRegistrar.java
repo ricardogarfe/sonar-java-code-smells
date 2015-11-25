@@ -23,7 +23,7 @@ public class CodeSmellsFileCheckRegistrar implements CheckRegistrar {
   public void register(RegistrarContext registrarContext) {
     // Call to registerClassesForRepository to associate the classes with the
     // correct repository key
-    registrarContext.registerClassesForRepository(CodeSmellsJavaRuesDefinition.REPOSITORY_KEY, Arrays.asList(checkClasses()),
+    registrarContext.registerClassesForRepository(CodeSmellsJavaRulesDefinition.REPOSITORY_KEY, Arrays.asList(checkClasses()),
         Arrays.asList(testCheckClasses()));
   }
 

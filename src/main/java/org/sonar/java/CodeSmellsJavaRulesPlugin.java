@@ -19,7 +19,7 @@ public class CodeSmellsJavaRulesPlugin extends SonarPlugin {
   public List getExtensions() {
     return Arrays.asList(
       // server extensions -> objects are instantiated during server startup
-      CodeSmellsJavaRuesDefinition.class,
+      CodeSmellsJavaRulesDefinition.class,
 
       // batch extensions -> objects are instantiated during code analysis
       CodeSmellsFileCheckRegistrar.class);
