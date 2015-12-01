@@ -5,29 +5,33 @@
  */
 package org.sonar.java;
 
+import com.google.common.collect.ImmutableList;
 import org.sonar.api.server.rule.RulesDefinition;
-import org.sonar.api.server.rule.RulesDefinitionAnnotationLoader;
-import org.sonar.java.checks.CheckList;
 import org.sonar.plugins.java.Java;
 import org.sonar.squidbridge.annotations.AnnotationBasedRulesDefinition;
 
+import java.util.List;
+
 /**
- * Declare rule metadata in server repository of rules. That allows to list the rules
+ * Declare rule metadata in server repository of rules. That allows to list the
+ * rules
  * in the page "Rules".
  */
 public class CodeSmellsJavaRulesDefinition implements RulesDefinition {
 
-  public static final String REPOSITORY_KEY = "codesmells";
+    public static final String REPOSITORY_KEY = "codesmells";
+    public static final String REPOSITORY_NAME = "Java Code Smells";
 
-  @Override
-  public void define(Context context) {
-    NewRepository repo = context.createRepository(REPOSITORY_KEY, Java.KEY);
-    repo.setName("Java Code Smells");
+    @Override
+    public void define(Context context) {
+        final NewRepository repository = context.createRepository(REPOSITORY_KEY, Java.KEY).setName(REPOSITORY_NAME);
+        final List<Class> checkClasses = ImmutableList.<Class>builder()
+                .addAll(CodeSmellsFileCheckRegistrar.checkClasses()).build();
 
-    // We could use a XML or JSON file to load all rule metadata, but
-    // we prefer use annotations in order to have all information in a single place
-    RulesDefinitionAnnotationLoader annotationLoader = new RulesDefinitionAnnotationLoader();
-    annotationLoader.load(repo, CodeSmellsFileCheckRegistrar.checkClasses());
-    repo.done();
-  }
+        AnnotationBasedRulesDefinition.load(repository, Java.KEY, checkClasses);
+        for (final NewRule rule : repository.rules()) {
+            rule.setInternalKey(rule.key());
+        }
+        repository.done();
+    }
 }

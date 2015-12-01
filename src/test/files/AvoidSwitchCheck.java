@@ -3,11 +3,11 @@
  * src/test/files in order to not be part of the maven compilation.
  **/
 
-class AvoidSwitchCheck { 
-  void foo(){ 
-      switch (1) { // Noncompliant 
-        case 1:  
-          break;  
-      }
+class AvoidSwitchCheck {
+    void foo() {
+        switch (1) { // Noncompliant
+            case 1:
+                break;
+        }
     }
 }

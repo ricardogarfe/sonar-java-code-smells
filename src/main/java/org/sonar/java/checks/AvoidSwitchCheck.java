@@ -11,27 +11,27 @@ import org.sonar.squidbridge.annotations.ActivatedByDefault;
 import org.sonar.squidbridge.annotations.SqaleConstantRemediation;
 import org.sonar.squidbridge.annotations.SqaleSubCharacteristic;
 
-@Rule(key = "AvoidSwitch", name = "\"switch\" statements are evil",tags = {
-    "error", "apocalypse" }, description ="AvoidSwitch", priority = Priority.BLOCKER)
+@Rule(key = "AvoidSwitch", name = "\"switch\" statements are evil", tags = {
+        "error", "apocalypse"}, description = "AvoidSwitch", priority = Priority.BLOCKER)
 @ActivatedByDefault
 @SqaleSubCharacteristic(RulesDefinition.SubCharacteristics.API_ABUSE)
 @SqaleConstantRemediation("2min")
 public class AvoidSwitchCheck extends BaseTreeVisitor implements JavaFileScanner {
 
-  private JavaFileScannerContext context;
+    private JavaFileScannerContext context;
 
-  @Override
-  public void scanFile(JavaFileScannerContext context) {
-    this.context = context;
-    scan(context.getTree());
-  }
+    @Override
+    public void scanFile(JavaFileScannerContext context) {
+        this.context = context;
+        scan(context.getTree());
+    }
 
-  @Override
-  public void visitSwitchStatement(SwitchStatementTree tree) {
+    @Override
+    public void visitSwitchStatement(SwitchStatementTree tree) {
 
-    context.addIssue(tree, this, "Remove this \"switch\" statement and develop with Polymorphism.");
+        context.addIssue(tree, this, "Remove this \"switch\" statement and develop with Polymorphism.");
 
-    super.visitSwitchStatement(tree);
-  }
+        super.visitSwitchStatement(tree);
+    }
 
 }
