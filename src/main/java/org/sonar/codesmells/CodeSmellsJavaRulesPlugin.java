@@ -3,11 +3,11 @@
  * All rights reserved
  * mailto:contact AT sonarsource DOT com
  */
-package org.sonar.java;
+package org.sonar.codesmells;
 
-import com.google.common.collect.ImmutableList;
 import org.sonar.api.SonarPlugin;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -17,12 +17,12 @@ public class CodeSmellsJavaRulesPlugin extends SonarPlugin {
 
     @Override
     public List getExtensions() {
-        return ImmutableList.builder()
+        return Arrays.asList(
                 // server extensions -> objects are instantiated during server startup
-                .add(CodeSmellsJavaRulesDefinition.class)
+                CodeSmellsJavaRulesDefinition.class,
 
                 // batch extensions -> objects are instantiated during code analysis
-                .add(CodeSmellsFileCheckRegistrar.class).build();
+                CodeSmellsFileCheckRegistrar.class);
     }
 
 }

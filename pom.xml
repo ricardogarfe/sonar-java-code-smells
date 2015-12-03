@@ -90,7 +90,7 @@
                 <version>1.12.1</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <pluginClass>org.sonar.java.CodeSmellsJavaRulesPlugin</pluginClass>
+                    <pluginClass>org.sonar.codesmells.CodeSmellsJavaRulesPlugin</pluginClass>
                 </configuration>
             </plugin>
 

@@ -1,4 +1,4 @@
-package org.sonar.java.checks;
+package org.sonar.codesmells.checks;
 
 import org.junit.Test;
 import org.sonar.java.checks.verifier.JavaCheckVerifier;

@@ -1,4 +1,4 @@
-package org.sonar.java.checks;
+package org.sonar.codesmells.checks;
 
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.check.Priority;
