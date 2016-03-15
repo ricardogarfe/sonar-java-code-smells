@@ -1,12 +1,10 @@
 package org.sonar.codesmells;
 
-import com.google.common.collect.Lists;
 import org.sonar.codesmells.checks.AvoidSwitchCheck;
 import org.sonar.plugins.java.api.CheckRegistrar;
 import org.sonar.plugins.java.api.JavaCheck;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Provide the "checks" (implementations of rules) classes that are gonna be

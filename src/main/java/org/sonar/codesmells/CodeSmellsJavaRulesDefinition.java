@@ -22,14 +22,14 @@ public class CodeSmellsJavaRulesDefinition implements RulesDefinition {
     @Override
     public void define(Context context) {
 
-        NewRepository repo = context.createRepository(REPOSITORY_KEY, LANGUAGE_KEY);
-        repo.setName(REPOSITORY_NAME);
+        NewRepository repository = context.createRepository(REPOSITORY_KEY, LANGUAGE_KEY);
+        repository.setName(REPOSITORY_NAME);
 
         // We could use a XML or JSON file to load all rule metadata, but
         // we prefer use annotations in order to have all information in a single place
         RulesDefinitionAnnotationLoader annotationLoader = new RulesDefinitionAnnotationLoader();
-        annotationLoader.load(repo, CodeSmellsFileCheckRegistrar.checkClasses());
-        repo.done();
+        annotationLoader.load(repository, CodeSmellsFileCheckRegistrar.checkClasses());
+        repository.done();
 
     }
 }
