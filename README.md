@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/ricardogarfe/sonar-java-code-smells.svg)](https://travis-ci.org/ricardogarfe/sonar-java-code-smells)
+[![Build Status](https://snap-ci.com/ricardogarfe/sonar-java-code-smells/branch/master/build_image)](https://snap-ci.com/ricardogarfe/sonar-java-code-smells/branch/master)
 
 # Java Code Smells
 
