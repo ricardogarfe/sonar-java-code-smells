@@ -5,8 +5,11 @@
  */
 package org.sonar.codesmells;
 
+import com.google.common.collect.Iterables;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinitionAnnotationLoader;
+
+import java.util.List;
 
 /**
  * Declare rule metadata in server repository of rules. That allows to list the
@@ -15,21 +18,20 @@ import org.sonar.api.server.rule.RulesDefinitionAnnotationLoader;
  */
 public class CodeSmellsJavaRulesDefinition implements RulesDefinition {
 
-    public static final String REPOSITORY_KEY = "codesmells";
-    public static final String REPOSITORY_NAME = "Java Code Smells";
-    public static final String LANGUAGE_KEY = "java";
+  public static final String REPOSITORY_KEY = "codesmells";
+  public static final String REPOSITORY_NAME = "Java Code Smells";
+  public static final String LANGUAGE_KEY = "java";
 
-    @Override
-    public void define(Context context) {
+  @Override
+  public void define(Context context) {
 
-        NewRepository repository = context.createRepository(REPOSITORY_KEY, LANGUAGE_KEY);
-        repository.setName(REPOSITORY_NAME);
+    NewRepository repository = context.createRepository(REPOSITORY_KEY, LANGUAGE_KEY);
+    repository.setName(REPOSITORY_NAME);
 
-        // We could use a XML or JSON file to load all rule metadata, but
-        // we prefer use annotations in order to have all information in a single place
-        RulesDefinitionAnnotationLoader annotationLoader = new RulesDefinitionAnnotationLoader();
-        annotationLoader.load(repository, CodeSmellsFileCheckRegistrar.checkClasses());
-        repository.done();
-
-    }
+    // Load defined rules
+    List<Class> checks = CodeSmellRulesList.getChecks();
+    RulesDefinitionAnnotationLoader annotationLoader = new RulesDefinitionAnnotationLoader();
+    annotationLoader.load(repository, Iterables.toArray(checks, Class.class));
+    repository.done();
+  }
 }
