@@ -1,18 +1,23 @@
 package org.sonar.codesmells.checks;
 
+import com.google.common.collect.ImmutableList;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.check.Priority;
 import org.sonar.check.Rule;
+import org.sonar.plugins.java.api.IssuableSubscriptionVisitor;
 import org.sonar.plugins.java.api.JavaFileScanner;
 import org.sonar.plugins.java.api.JavaFileScannerContext;
 import org.sonar.plugins.java.api.tree.BaseTreeVisitor;
 import org.sonar.plugins.java.api.tree.SwitchStatementTree;
+import org.sonar.plugins.java.api.tree.Tree;
 import org.sonar.squidbridge.annotations.ActivatedByDefault;
 import org.sonar.squidbridge.annotations.SqaleConstantRemediation;
 import org.sonar.squidbridge.annotations.SqaleSubCharacteristic;
 
+import java.util.List;
+
 @Rule(key = "AvoidSwitch", name = "\"switch\" statements are evil", tags = {
-        "error", "apocalypse"}, description = "<p>You have a conditional that chooses different behavior depending on the type of an object.</p>\n" +
+        "error", "apocalypse", "bug"}, description = "<p>You have a conditional that chooses different behavior depending on the type of an object.</p>\n" +
         "\n" +
         "<h2>Noncompliant Code Example</h2>\n" +
         "\n" +
@@ -39,25 +44,16 @@ import org.sonar.squidbridge.annotations.SqaleSubCharacteristic;
         "        Polymorphism</a> - Fowler Refactoring Catalog\n" +
         "    </li>\n" +
         "</ul>", priority = Priority.BLOCKER)
-@ActivatedByDefault
-@SqaleSubCharacteristic(RulesDefinition.SubCharacteristics.API_ABUSE)
-@SqaleConstantRemediation("2min")
-public class AvoidSwitchCheck extends BaseTreeVisitor implements JavaFileScanner {
+public class AvoidSwitchCheck extends IssuableSubscriptionVisitor {
 
-    private JavaFileScannerContext context;
+  @Override
+  public List<Tree.Kind> nodesToVisit() {
+    return ImmutableList.of(Tree.Kind.SWITCH_STATEMENT);
+  }
 
-    @Override
-    public void scanFile(JavaFileScannerContext context) {
-        this.context = context;
-        scan(context.getTree());
-    }
-
-    @Override
-    public void visitSwitchStatement(SwitchStatementTree tree) {
-
-        context.addIssue(tree, this, "Remove this \"switch\" statement and develop with Polymorphism.");
-
-        super.visitSwitchStatement(tree);
-    }
-
+  @Override
+  public void visitNode(Tree tree) {
+    SwitchStatementTree switchStatementTree = (SwitchStatementTree) tree;
+    reportIssue(switchStatementTree, "Remove this \"switch\" statement and develop with Polymorphism.");
+  }
 }
