@@ -12,8 +12,7 @@ addons:
     github_token:
       secure: "BZOmtCK5+L7Qe6YOEAMRR8GK3Ljj+W019b80oSgl0VPkrg+lwARX+023d2zChYN2As1Yox/gonQUzzbgqU1W/prYK2PIpQ6YE6JOLrNJEQhz5NXsmK2JDp2xU63/1v629rx/JP4uc3LONG+NGFhFNLqKXaLk0tvu0AdexcTXTIAP2zvovs7gS2JURMhXYqyHRucMVXWYcdYGuwcvbL4GSbfnMo1FOFdMF5+SLZpTtpCoYqy0Qu6DtKHk5Ql+DNeRjghkrgN3nuDkr7rU77e2qPcdQriA1mi6BKjnrFZw47ka3co/anocP//uF4wqQVS6gA5QW+jnF47KUMapHmIacGzuiyVRkaHPisOFj1eBSE+zLLwAyGwUijYAO8eytJaoC1ozBDhTUX/PD8Q1R7hwXWsGBRy3UiNg/lDA8qH+WCTz72k47gzzdBP8aOYYSU6ubNbALxbwrLZpuu2D9nlJAqsvYW4IW0FNc7PDzc2OUK4O6n2RqZAGNYfHCNokB2V2guTrdor87NZeFTI3Xgm4a+VI9jZ3CokWKaQElYon2nTZ/4/vAxsJmmzc36zwBUXn6spGislDYz06utdBI7fBSuA7z34jt1YoG/zcuMg1NgPlH4TMGbLnH076lvkeUNl2jxt8yUBHuq2uflsslcGUkJgDtfRjeRWDTHmiZc544hU="
   branches:
-    - master
-    - migrate-to-new-api
+    - DEV
 
 script:
   # the following command line builds the project, runs the tests with coverage and then execute the SonarQube analysis
