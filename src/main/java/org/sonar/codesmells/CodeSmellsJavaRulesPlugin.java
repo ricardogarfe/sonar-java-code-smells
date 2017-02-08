@@ -5,24 +5,21 @@
  */
 package org.sonar.codesmells;
 
-import org.sonar.api.SonarPlugin;
-
-import java.util.Arrays;
-import java.util.List;
+import org.sonar.api.Plugin;
 
 /**
  * Entry point of plugin
  */
-public class CodeSmellsJavaRulesPlugin extends SonarPlugin {
+public class CodeSmellsJavaRulesPlugin implements Plugin {
 
     @Override
-    public List getExtensions() {
-        return Arrays.asList(
-                // server extensions -> objects are instantiated during server startup
-                CodeSmellsJavaRulesDefinition.class,
+    public void define (Context context) {
 
-                // batch extensions -> objects are instantiated during code analysis
-                CodeSmellsFileCheckRegistrar.class);
+      // server extensions -> objects are instantiated during server startup
+      context.addExtension(CodeSmellsJavaRulesDefinition.class);
+
+      // batch extensions -> objects are instantiated during code analysis
+      context.addExtension(CodeSmellsFileCheckRegistrar.class);
     }
 
 }
