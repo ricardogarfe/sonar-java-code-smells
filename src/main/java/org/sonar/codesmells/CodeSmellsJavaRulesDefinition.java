@@ -5,8 +5,19 @@
  */
 package org.sonar.codesmells;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
+import com.google.gson.Gson;
+import org.sonar.api.rule.RuleStatus;
+import org.sonar.api.server.debt.DebtRemediationFunction;
 import org.sonar.api.server.rule.RulesDefinition;
-import org.sonar.api.server.rule.RulesDefinitionAnnotationLoader;
+import org.sonar.squidbridge.annotations.AnnotationBasedRulesDefinition;
+
+import javax.annotation.Nullable;
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Declare rule metadata in server repository of rules. That allows to list the
@@ -15,21 +26,92 @@ import org.sonar.api.server.rule.RulesDefinitionAnnotationLoader;
  */
 public class CodeSmellsJavaRulesDefinition implements RulesDefinition {
 
-    public static final String REPOSITORY_KEY = "codesmells";
-    public static final String REPOSITORY_NAME = "Java Code Smells";
-    public static final String LANGUAGE_KEY = "java";
+  public static final String REPOSITORY_KEY = "codesmells-java";
+  public static final String REPOSITORY_NAME = "Java Code Smells";
+  public static final String LANGUAGE_KEY = "java";
 
-    @Override
-    public void define(Context context) {
+  private final Gson gson = new Gson();
 
-        NewRepository repository = context.createRepository(REPOSITORY_KEY, LANGUAGE_KEY);
-        repository.setName(REPOSITORY_NAME);
+  @Override
+  public void define(Context context) {
 
-        // We could use a XML or JSON file to load all rule metadata, but
-        // we prefer use annotations in order to have all information in a single place
-        RulesDefinitionAnnotationLoader annotationLoader = new RulesDefinitionAnnotationLoader();
-        annotationLoader.load(repository, CodeSmellsFileCheckRegistrar.checkClasses());
-        repository.done();
+    NewRepository repository = context.createRepository(REPOSITORY_KEY, LANGUAGE_KEY);
+    repository.setName(REPOSITORY_NAME);
 
+    // Load defined rules
+    List<Class> checks = CodeSmellRulesList.getChecks();
+
+    new AnnotationBasedRulesDefinition(repository, LANGUAGE_KEY)
+        .addRuleClasses(/* don't fail if no SQALE annotations */ false, checks);
+
+    for (NewRule rule : repository.rules()) {
+      String metadataKey = rule.key();
+      // Setting internal key is essential for rule templates (see SONAR-6162), and it is not done by AnnotationBasedRulesDefinition from
+      // sslr-squid-bridge version 2.5.1:
+      rule.setInternalKey(metadataKey);
+      rule.setHtmlDescription(readRuleDefinitionResource(metadataKey + ".html"));
+      addMetadata(rule, metadataKey);
     }
+
+    repository.done();
+  }
+
+  @Nullable
+  private static String readRuleDefinitionResource(String fileName) {
+    URL resource = CodeSmellsJavaRulesDefinition.class.getResource("/org/sonar/l10n/java/rules/codesmells/" + fileName);
+    if (resource == null) {
+      return null;
+    }
+    try {
+      return Resources.toString(resource, Charsets.UTF_8);
+    } catch (IOException e) {
+      throw new IllegalStateException("Failed to read: " + resource, e);
+    }
+  }
+
+  private void addMetadata(NewRule rule, String metadataKey) {
+    String json = readRuleDefinitionResource(metadataKey + ".json");
+    if (json != null) {
+      RuleMetadata metadata = gson.fromJson(json, RuleMetadata.class);
+      rule.setSeverity(metadata.defaultSeverity.toUpperCase(Locale.US));
+      rule.setName(metadata.title);
+      rule.setTags(metadata.tags);
+      rule.setStatus(RuleStatus.valueOf(metadata.status.toUpperCase(Locale.US)));
+
+      if (metadata.remediation != null) {
+        // metadata.remediation is null for template rules
+        rule.setDebtRemediationFunction(metadata.remediation.remediationFunction(rule.debtRemediationFunctions()));
+        rule.setGapDescription(metadata.remediation.linearDesc);
+      }
+    }
+  }
+
+  private static class RuleMetadata {
+    String title;
+    String status;
+    @Nullable
+    Remediation remediation;
+
+    String[] tags;
+    String defaultSeverity;
+  }
+
+  private static class Remediation {
+    String func;
+    String constantCost;
+    String linearDesc;
+    String linearOffset;
+    String linearFactor;
+
+    private DebtRemediationFunction remediationFunction(DebtRemediationFunctions drf) {
+      if (func.startsWith("Constant")) {
+        return drf.constantPerIssue(constantCost.replace("mn", "min"));
+      }
+      if ("Linear".equals(func)) {
+        return drf.linear(linearFactor.replace("mn", "min"));
+      }
+      return drf.linearWithOffset(linearFactor.replace("mn", "min"), linearOffset.replace("mn", "min"));
+    }
+  }
+
 }

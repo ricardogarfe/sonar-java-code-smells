@@ -1,10 +1,6 @@
 package org.sonar.codesmells;
 
-import org.sonar.codesmells.checks.AvoidSwitchCheck;
 import org.sonar.plugins.java.api.CheckRegistrar;
-import org.sonar.plugins.java.api.JavaCheck;
-
-import java.util.Arrays;
 
 /**
  * Provide the "checks" (implementations of rules) classes that are gonna be
@@ -15,30 +11,14 @@ import java.util.Arrays;
  */
 public class CodeSmellsFileCheckRegistrar implements CheckRegistrar {
 
-    /**
-     * Register the classes that will be used to instantiate checks during
-     * analysis.
-     */
-    @Override
-    public void register(RegistrarContext registrarContext) {
-        // Call to registerClassesForRepository to associate the classes with the
-        // correct repository key
-        registrarContext.registerClassesForRepository(CodeSmellsJavaRulesDefinition.REPOSITORY_KEY, Arrays.asList(checkClasses()),
-                Arrays.asList(testCheckClasses()));
-    }
-
-    /**
-     * Lists all the checks provided by the plugin
-     */
-    public static Class<? extends JavaCheck>[] checkClasses() {
-        return new Class[] { AvoidSwitchCheck.class };
-    }
-
-    /**
-     * Lists all the test checks provided by the plugin
-     */
-    public static Class<? extends JavaCheck>[] testCheckClasses() {
-        return new Class[] {};
-    }
-
+  /**
+   * Register the classes that will be used to instantiate checks during analysis.
+   */
+  @Override
+  public void register(RegistrarContext registrarContext) {
+    // Call to registerClassesForRepository to associate the classes with the correct repository key
+    registrarContext.registerClassesForRepository(CodeSmellsJavaRulesDefinition.REPOSITORY_KEY,
+        CodeSmellRulesList.getJavaChecks(),
+        CodeSmellRulesList.getJavaTestChecks());
+  }
 }
