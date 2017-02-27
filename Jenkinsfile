@@ -4,17 +4,18 @@ node {
     checkout scm
 
     stage 'Configure'
-    env.PATH = "${tool 'Maven 3'}/bin:${env.PATH}"
+    # env.PATH = "${tool 'Maven 3'}/bin:${env.PATH}"
+    def mvnHome = tool 'Maven 3'
 
     // Mark the code build 'stage'....
     stage('Build') {
       // Run the maven build
-      sh 'mvn clean package'
+      sh "${mvnHome} clean verify"
     }
 
     stage('SonarQube analysis') {
       withSonarQubeEnv('SonarQube') {
-        sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
+        sh "${mvnHome} sonar:sonar -Dsonar.branch=${env.BRANCH_NAME}"
       }
     }
 }
