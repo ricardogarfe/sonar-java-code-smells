@@ -35,7 +35,6 @@ public class CodeSmellRulesList {
    */
   public static List<Class<? extends JavaCheck>> getJavaTestChecks() {
     return ImmutableList.<Class<? extends JavaCheck>>builder()
-        .add(AvoidSwitchCheck.class)
         .build();
   }
 }
