@@ -3,51 +3,43 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <name>SonarQube Code Smells Custom Rules</name>
+    <description>Java Code Smells Rules for SonarQube</description>
+    <inceptionYear>2017</inceptionYear>
+
     <groupId>org.sonar</groupId>
     <artifactId>sonar-codesmells-plugin</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>sonar-plugin</packaging>
 
     <properties>
-        <sonar.plugin.api.version>5.6.3</sonar.plugin.api.version>
-        <java.plugin.version>4.2.1.6971</java.plugin.version>
         <sslr.version>1.21</sslr.version>
-        <junit.version>4.12</junit.version>
-        <mockito.version>1.10.19</mockito.version>
         <gson.version>2.6.2</gson.version>
-        <guava.version>21.0</guava.version>
+        <sonar.version>8.2.0.32929</sonar.version>
+        <sonarjava.version>6.3.0.21585</sonarjava.version>
     </properties>
-
-    <name>Java Code Smells Rules</name>
-    <description>Java custom rules for Code Smells</description>
 
     <dependencies>
         <dependency>
             <groupId>org.sonarsource.sonarqube</groupId>
             <artifactId>sonar-plugin-api</artifactId>
-            <version>${sonar.plugin.api.version}</version>
+            <version>${sonar.version}</version>
             <scope>provided</scope>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>${mockito.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.hamcrest</groupId>
-                    <artifactId>hamcrest-core</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>org.sonarsource.java</groupId>
             <artifactId>sonar-java-plugin</artifactId>
             <type>sonar-plugin</type>
-            <version>${java.plugin.version}</version>
+            <version>${sonarjava.version}</version>
             <scope>provided</scope>
+        </dependency>
+
+        <!-- Required since SonarQube > 8.1 -->
+        <dependency>
+            <groupId>org.sonarsource.sonarqube</groupId>
+            <artifactId>sonar-plugin-api-impl</artifactId>
+            <version>${sonar.version}</version>
         </dependency>
 
         <dependency>
@@ -81,14 +73,7 @@
         <dependency>
             <groupId>org.sonarsource.java</groupId>
             <artifactId>java-checks-testkit</artifactId>
-            <version>${java.plugin.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.sonarsource.sslr</groupId>
-            <artifactId>sslr-testing-harness</artifactId>
-            <version>${sslr.version}</version>
+            <version>${sonarjava.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -99,9 +84,10 @@
         </dependency>
 
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
+            <groupId>org.sonarsource.sslr</groupId>
+            <artifactId>sslr-testing-harness</artifactId>
+            <version>${sslr.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -111,19 +97,29 @@
         </dependency>
 
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>26.0-jre</version>
         </dependency>
 
         <dependency>
-            <groupId>org.easytesting</groupId>
-            <artifactId>fest-assert</artifactId>
-            <version>1.4</version>
-            <scope>test</scope>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.6.2</version>
         </dependency>
 
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.6.1</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
@@ -144,7 +140,8 @@
                     <pluginName>Java Code Smells Rules</pluginName>
                     <pluginClass>org.sonar.codesmells.CodeSmellsJavaRulesPlugin</pluginClass>
                     <sonarLintSupported>true</sonarLintSupported>
-                    <sonarQubeMinVersion>5.6</sonarQubeMinVersion> <!-- allow to depend on API 6.x but run on LTS -->
+                    <sonarQubeMinVersion>7.9</sonarQubeMinVersion>
+                    <requirePlugins>java:${sonarjava.version}</requirePlugins>
                 </configuration>
             </plugin>
 
