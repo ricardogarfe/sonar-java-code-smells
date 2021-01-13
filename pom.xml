@@ -136,9 +136,9 @@
                 <version>1.17</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <pluginKey>java-custom</pluginKey>
-                    <pluginName>Java Custom Rules</pluginName>
-                    <pluginClass>org.sonar.samples.java.MyJavaRulesPlugin</pluginClass>
+                    <pluginKey>java-codesmells</pluginKey>
+                    <pluginName>Java Code Smells Rules</pluginName>
+                    <pluginClass>org.sonar.codesmells.CodeSmellsJavaRulesPlugin</pluginClass>
                     <sonarLintSupported>true</sonarLintSupported>
                     <sonarQubeMinVersion>7.9</sonarQubeMinVersion>
                     <requirePlugins>java:${sonarjava.version}</requirePlugins>
