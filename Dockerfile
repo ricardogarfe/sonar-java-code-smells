@@ -1,4 +1,4 @@
-from sonarqube:6.2
+from sonarqube:7.1
 
 # Http port
 EXPOSE 9000
