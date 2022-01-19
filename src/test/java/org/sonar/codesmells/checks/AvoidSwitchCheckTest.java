@@ -1,7 +1,7 @@
 package org.sonar.codesmells.checks;
 
 import org.junit.Test;
-import org.sonar.java.checks.verifier.JavaCheckVerifier;
+import org.sonar.java.checks.verifier.CheckVerifier;
 
 public class AvoidSwitchCheckTest {
 
@@ -16,6 +16,10 @@ public class AvoidSwitchCheckTest {
         // In the test file, lines which should raise an issue have been commented
         // out
         // by using the following syntax: "// Noncompliant {{EXPECTED_MESSAGE}}"
-        JavaCheckVerifier.verify("src/test/files/AvoidSwitchCheck.java", check);
+        CheckVerifier.newVerifier()
+            .onFile("src/test/files/AvoidSwitchCheck.java")
+            .withCheck(check)
+            .verifyIssues();
+
     }
 }
