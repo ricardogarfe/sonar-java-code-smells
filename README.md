@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/ricardogarfe/sonar-java-code-smells.svg)](https://travis-ci.org/ricardogarfe/sonar-java-code-smells)
-[![Build Status](https://snap-ci.com/ricardogarfe/sonar-java-code-smells/branch/master/build_image)](https://snap-ci.com/ricardogarfe/sonar-java-code-smells/branch/master)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=org.sonar%3Asonar-codesmells-plugin&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=org.sonar%3Asonar-codesmells-plugin)
 
 # Java Code Smells
 
