@@ -130,7 +130,7 @@
 
     <build>
         <plugins>
-            <plugin>
+                 <plugin>
                 <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
                 <artifactId>sonar-packaging-maven-plugin</artifactId>
                 <version>1.21.0.505</version>
@@ -138,9 +138,10 @@
                 <configuration>
                     <pluginKey>java-codesmells</pluginKey>
                     <pluginName>Java Code Smells Rules</pluginName>
+                    <skipDependenciesPackaging>true</skipDependenciesPackaging>
                     <pluginClass>org.sonar.codesmells.CodeSmellsJavaRulesPlugin</pluginClass>
                     <sonarLintSupported>true</sonarLintSupported>
-                    <sonarQubeMinVersion>7.9</sonarQubeMinVersion>
+                    <sonarQubeMinVersion>8.9</sonarQubeMinVersion>
                     <requirePlugins>java:${sonarjava.version}</requirePlugins>
                 </configuration>
             </plugin>
